@@ -12,7 +12,7 @@ class CategoryFactory extends Factory
 {
     public function definition(): array
     {
-        $name = $this->faker->unique()->word(); // Génère un mot unique
+        $name = $this->faker->unique()->word(); 
 
         return [
             'name' => $name,

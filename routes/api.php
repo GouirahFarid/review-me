@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CityController;
 
 
 /*Route::get('/user', function (Request $request) {
@@ -32,12 +33,11 @@ Route::prefix('reviews')->name('reviews')->controller(ReviewController::class)->
 });
 
 Route::get('/countries', [CountryController::class, 'index']);
-
-
+Route::get('countries/{country}/cities', [CityController::class, 'index']);
 Route::prefix('categories')->controller(CategoryController::class)->group(function () {
     Route::get('/',  'index'); // Liste des catégories
     Route::post('/',  'store'); // Créer une catégorie ou sous-catégorie
     Route::delete('/{category}', 'destroy');
 
 });
- // Supprimer une catégorie
+
