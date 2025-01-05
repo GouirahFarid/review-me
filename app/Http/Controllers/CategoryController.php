@@ -2,58 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Category\DeleteCategory;
-use App\Actions\Category\GetAllCategories;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
-    /**
-     * Récupérer toutes les catégories.
-     *
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
+    protected CategoryService $categoryService;
+
+    public function __construct(CategoryService $categoryService)
     {
-        return response()->json((new GetAllCategories())->handle());
+        $this->categoryService = $categoryService;
     }
 
-    /**
-     * Créer une nouvelle catégorie ou sous-catégorie.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return JsonResponse
-     */
-    public function store(Request $request)
+    public function index(): Response
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
-            'slug' => 'required|string|max:255|unique:categories,slug',
-            'description' => 'nullable|string',
-            'meta' => 'nullable|array',
-            'category_id' => 'nullable|exists:categories,id', // ID du parent pour les sous-catégories
-        ]);
+        $categories = $this->categoryService->getCategories();
 
-        $category = Category::create($validated);
-
-        return response()->json([
-            'success' => true,
-            'category' => $category,
+        return Inertia::render('Admin/Categories/Index', [
+            'categories' => $categories,
         ]);
     }
 
-    /**
-     * Supprimer une catégorie.
-     *
-     * @param \App\Models\Category $category
-     * @return JsonResponse
-     */
-    public function destroy(Category $category): JsonResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        return response()->json([
-            'status' =>(new DeleteCategory())->handle($category)
-        ]);
+        $this->categoryService->storeCategory($request->validated());
+
+        return redirect()->back()->with('success', 'Category created successfully');
+    }
+
+    public function update(StoreCategoryRequest $request, Category $category): RedirectResponse
+    {
+        $this->categoryService->updateCategory($category, $request->validated());
+
+        return redirect()->back()->with('success', 'Category updated successfully');
+    }
+
+    public function destroy(Category $category): RedirectResponse
+    {
+        try {
+            $this->categoryService->deleteCategory($category);
+
+            return redirect()->back()->with('success', 'Category deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

@@ -7,27 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
+    protected $fillable = ['name', 'slug', 'description', 'category_id', 'meta'];
 
-    /**
-     * Les attributs qui peuvent être remplis via l'attribution de masse.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'meta',
-        'category_id', // Si tu gères des sous-catégories
-    ];
 
-    /**
-     * Indiquer que le champ "meta" est un tableau JSON.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'meta' => 'array',
-    ];
+
+    public function places()
+    {
+        return $this->belongsToMany(Place::class);
+    }
+
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

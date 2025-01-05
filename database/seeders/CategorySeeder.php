@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Category;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
@@ -12,7 +13,24 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Utilise la factory pour créer 10 catégories factices
-        Category::factory()->count(10)->create();
+        $categories = [
+            ['name' => 'Restaurant', 'slug' => 'restaurant'],
+            ['name' => 'Café', 'slug' => 'cafe'],
+            ['name' => 'Bar', 'slug' => 'bar'],
+            ['name' => 'Bistro', 'slug' => 'bistro'],
+            ['name' => 'Brasserie', 'slug' => 'brasserie'],
+            ['name' => 'Fast Food', 'slug' => 'fast-food'],
+            ['name' => 'Food Court', 'slug' => 'food-court'],
+            ['name' => 'Food Truck', 'slug' => 'food-truck'],
+            ['name' => 'Fine Dining', 'slug' => 'fine-dining'],
+            ['name' => 'Casual Dining', 'slug' => 'casual-dining'],
+            ['name' => 'Pub', 'slug' => 'pub'],
+            ['name' => 'Nightclub', 'slug' => 'nightclub'],
+            ['name' => 'Lounge', 'slug' => 'lounge'],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
