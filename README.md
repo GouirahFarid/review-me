@@ -21,7 +21,7 @@
 
 - **Nesrine REKAI**
     - **Email**: nesrine.rekai@etudiant.univ-lr.fr
-    - **GitHub**: [github.com/https://github.com/NesrineREKAI](https://github.com/https://github.com/NesrineREKAI)
+    - **GitHub**: [github.com/NesrineREKAI](https://github.com/https://github.com/NesrineREKAI)
 
 - **GOUIRAH Farid**
     - **Email**: farid.gouirah@etudiant.univ-lr.fr
