@@ -51,8 +51,8 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/my-app.git
-   cd my-app
+   git clone git@github.com:GouirahFarid/review-me.git
+   cd review-me
    ```
 
 2. Install dependencies:
