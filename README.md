@@ -73,8 +73,12 @@
 
 4. Migrate and seed the database:
 
+   Before running the migration command, ensure that the application is connected to the database by verifying the `.env` file configuration.
+
+   Run the following command to refresh and seed the database:
+
    ```bash
-   php artisan migrate --seed
+   php artisan migrate:fresh --seed
    ```
 
    **Note**: Running the seeder is mandatory.
