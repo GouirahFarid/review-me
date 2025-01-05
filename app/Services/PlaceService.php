@@ -150,4 +150,27 @@ class PlaceService
         $place->delete();
     }
 
+    public function getTopRatedPlaces(): Collection
+    {
+        return QueryBuilder::for(Place::class)
+            ->with(['images', 'categories', 'addresses.city.country'])
+            ->withCount(['reviews', 'placeEvents'])
+            ->allowedFilters([
+                AllowedFilter::partial('name'),
+                AllowedFilter::exact('categories.id'),
+            ])
+            ->allowedSorts(['created_at', 'name', 'avg_rating'])
+            ->addSelect([
+                'avg_rating' => function ($query) {
+                    $query->from('reviews')
+                        ->selectRaw('AVG(rating)')
+                        ->whereColumn('reviews.place_id', 'places.id');
+                }
+            ])
+            ->orderByDesc('avg_rating')
+            ->limit(10)
+            ->get();
+    }
+
+
 }

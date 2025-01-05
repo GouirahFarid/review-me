@@ -80,6 +80,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         });
     });
 });
+Route::get('/',[DashboardController::class,'index'])->name('welcome');
 Route::prefix('places')->name('places.')->controller(PlaceController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
@@ -94,13 +95,6 @@ Route::prefix('places')->name('places.')->controller(PlaceController::class)->gr
             Route::delete('{review}', 'destroy');
         });
     });
-});
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'phpVersion' => PHP_VERSION,
-    ]);
 });
 /*
 use App\Http\Controllers\CategoryController;
