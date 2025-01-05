@@ -118,13 +118,6 @@
   npm run watch
   ```
 
-- Run Laravel scheduler and queue workers if needed:
-
-  ```bash
-  php artisan schedule:work
-  php artisan queue:work
-  ```
-
 ### Production Build
 
 1. Build the frontend assets:
