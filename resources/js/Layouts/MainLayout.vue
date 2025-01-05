@@ -16,9 +16,6 @@
                     <div class="flex-1 max-w-3xl mx-8">
                         <div class="flex gap-4">
                             <div class="relative flex-1">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                                    icon
-                                </div>
                                 <input
                                     v-model="locationQuery"
                                     type="text"
@@ -51,18 +48,40 @@
                     <!-- Right Navigation -->
                     <div class="flex items-center space-x-4">
                         <Link
-                            href="/register-restaurant"
+                            href="/places"
                             class="text-sm text-gray-700 hover:text-gray-900"
                         >
-                            Register Restaurant
+                           Places
                         </Link>
-                        <template v-if="auth?.user">
-                            <Link
-                                href="/dashboard"
-                                class="text-sm text-gray-700 hover:text-gray-900"
-                            >
-                                Dashboard
-                            </Link>
+                        <template v-if="$page.props.auth.user">
+                            <Dropdown align="right" width="48">
+                                <template #trigger>
+                                    <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                                        <div class="ml-3 relative">
+                                            <div class="flex items-center">
+                                                <img
+                                                    v-if="$page.props.auth.user?.profile_photo_url"
+                                                    :src="$page.props.auth.user?.profile_photo_url"
+                                                    class="h-8 w-8 rounded-full object-cover"
+                                                />
+                                                <span v-else class="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
+                        <UserIcon class="h-full w-full text-gray-300" />
+                      </span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </template>
+
+                                <template #content>
+                                    <div class="px-4 py-2">
+                                        <div class="text-sm">{{ $page.props.auth.user?.name }}</div>
+                                        <div class="text-xs text-gray-500">{{ $page.props.auth.user?.email }}</div>
+                                    </div>
+                                    <div class="border-t border-gray-100"></div>
+                                    <DropdownLink :href="route('admin.index')">Profile</DropdownLink>
+                                    <DropdownLink :href="route('logout')" method="post" as="button">Logout</DropdownLink>
+                                </template>
+                            </Dropdown>
                         </template>
                         <template v-else>
                             <Link
@@ -103,20 +122,20 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Link } from '@inertiajs/vue3'
-import { SearchIcon, ChevronRightIcon } from 'lucide-vue-next'
+import {Link, usePage} from '@inertiajs/vue3'
+import {SearchIcon, ChevronRightIcon, UserIcon} from 'lucide-vue-next'
 import AppFooter from "@/Components/AppFooter.vue";
-
-const props = defineProps({
-    auth: Object
-})
+import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import { router } from '@inertiajs/vue3'
+const { auth, can } = usePage().props;
 
 const searchQuery = ref('')
 const locationQuery = ref('Paris')
 
 const handleSearch = () => {
     // Implement search logic here
-    router.get('/search', {
+    router.get('/places', {
         query: searchQuery.value,
         location: locationQuery.value
     }, {

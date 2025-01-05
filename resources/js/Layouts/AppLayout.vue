@@ -47,13 +47,6 @@ const navigation = computed(() => [
                 'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
               ]"
                         >
-<!--                            <component
-                                :is="item.icon"
-                                :class="[
-                  $page.url.startsWith(item.href) ? 'text-white' : 'text-indigo-300',
-                  'mr-3 flex-shrink-0 h-6 w-6'
-                ]"
-                            />-->
                             {{ item.name }}
                         </Link>
                     </nav>
