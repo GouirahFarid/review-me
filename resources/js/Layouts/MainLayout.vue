@@ -78,7 +78,7 @@
                                         <div class="text-xs text-gray-500">{{ $page.props.auth.user?.email }}</div>
                                     </div>
                                     <div class="border-t border-gray-100"></div>
-                                    <DropdownLink :href="route('admin.index')">Profile</DropdownLink>
+                                    <DropdownLink :href="route('admin.dashboard')">Admin Bashboard</DropdownLink>
                                     <DropdownLink :href="route('logout')" method="post" as="button">Logout</DropdownLink>
                                 </template>
                             </Dropdown>

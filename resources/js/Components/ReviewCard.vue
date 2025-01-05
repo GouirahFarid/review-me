@@ -31,7 +31,7 @@
 
             <!-- Rating -->
             <div class="text-xl font-bold">
-                {{ review.rating }}/10
+                {{ review.rating }}/5
             </div>
         </div>
 

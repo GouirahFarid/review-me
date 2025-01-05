@@ -105,7 +105,7 @@
                                     </div>
 
                                     <div class="flex flex-col items-end">
-                                        <div class="text-xl font-bold">{{ place.rating }}/10</div>
+                                        <div class="text-xl font-bold">{{ place.rating }}/5</div>
                                         <div class="text-sm text-gray-500">
                                             {{ place.reviews_count }} avis
                                         </div>
