@@ -109,6 +109,14 @@
 - **Inertia.js**: Bridges the backend and frontend, allowing seamless communication without traditional API endpoints.
 
 ## Usage
+## Routes
+
+- `/` : Home page
+- `/login` : Login page
+- `/register` : Register page
+- `/places` : List places page
+- `/places/{place_id}` : Place details page
+- `/admin` : Admin dashboard
 
 ### Running in Development
 
